@@ -1,5 +1,12 @@
-export default function Sidebar ({ $target, initialState }) {
-    const $sidebar = document.createElement("div")
+import PostList from "./PostList.js"
+
+export default function PostPage ({ $target, initialState }) {
+    const $page = document.createElement("div")
+    $page.className = 'documentDiv'
+    $target.appendChild($page)
+    new PostList({ 
+      $target: $page
+    })
 
     const testData = [
         {
@@ -26,16 +33,7 @@ export default function Sidebar ({ $target, initialState }) {
         }
     ]
 
+
+
     this.state = testData
-
-    $target.append($sidebar)
-
-    $sidebar.innerHTML = `
-        <ul>
-            ${this.state.map(item => `
-                ${item.id}<li>${item.title}<li>
-            `).join('')}
-
-        </ul>
-    `
 }

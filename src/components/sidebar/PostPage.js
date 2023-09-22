@@ -35,6 +35,11 @@ export default function PostPage ({ $target }) {
       testData
     })
 
-
+    // TODO: 컴포넌트화 시키기
+    const $newBtn = document.createElement("button")
+    $newBtn.textContent = "+ New Page"
+    $newBtn.className = "addNew"
+    $page.appendChild($newBtn)
+  
     // this.state = testData
 }

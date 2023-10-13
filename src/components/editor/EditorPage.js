@@ -15,7 +15,7 @@ export default function EditorPage({ $target, initialState }) {
         $target: $page,
         initialState: post,
         onEditing: async (editPost) => {
-            setTimeout( async () => {
+            setTimeout(async () => {
                 if (this.state.postId === 'new') {
                     const responsePost = await request('/documents', {
                         method: 'POST',
@@ -38,7 +38,7 @@ export default function EditorPage({ $target, initialState }) {
                         body: JSON.stringify(editPost)
                     })
                 }
-            }, 1000)
+            }, 500)
         }
     })
 
@@ -48,23 +48,17 @@ export default function EditorPage({ $target, initialState }) {
         }
 
         if (this.state.postId !== nextState.postId) {
+            this.state = nextState
+
             if (this.state.postId === 'new') {
                 this.render()
                 editor.setState(post)
             } else {
-                if (this.state.postId !== 'new') {
-                    const responsePost = await request(`/documents/${this.state.postId}`)
-                    this.setState({
-                        ...this.state,
-                        responsePost
-                    })
-                }
+                await fetchPost()
             }
             return
         }
         this.state = nextState
-
-        this.render()
 
         editor.setState(this.state.post || {
             title: '',
@@ -74,8 +68,20 @@ export default function EditorPage({ $target, initialState }) {
 
     this.render = () => {
         $target.appendChild($page)
-
     }
 
     this.render()
+
+
+    const fetchPost = async () => {
+        const { postId } = this.state
+
+        if (postId !== 'new') {
+            const responsePost = await request(`/documents/${postId}`)
+            this.setState({
+                ...this.state,
+                responsePost
+            })
+        }
+    }
 }

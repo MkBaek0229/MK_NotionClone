@@ -11,19 +11,11 @@ export default function App ({ $target }) {
     $target.appendChild($rendingContainer)
     
     const initialState = []
-    const postPage = new PostPage({ 
-        $target: $listContainer 
+    new PostPage({ 
+        $target: $listContainer
     })
-    postPage.setState()
-
-    const editorPage = new Editor({ 
-        $target: $rendingContainer, 
-        initialState: {
-            post: {
-                title: '',
-                cotent: ''
-            }
-        }
+    new Editor({ 
+        $target: $rendingContainer 
     })
 }
 
